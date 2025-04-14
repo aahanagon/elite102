@@ -1,39 +1,36 @@
 import sqlite3
 
-DB_NAME = 'example.db'
-
+DB_NAME = 'bank.db'
 
 def initialize_database():
     connection = sqlite3.connect(DB_NAME)
-    print("Connected to the database.")
     cursor = connection.cursor()
-    print("Cursor created.")
-    # Create a sample table
-    print("Creating table if it does not exist...")
+
+    # Create users table
     cursor.execute('''
-        CREATE TABLE IF NOT EXISTS students
-            (id integer primary key, 
-            name text, 
-            age integer, 
-            grade text, 
-            gpa real)
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            email TEXT UNIQUE NOT NULL,
+            password TEXT NOT NULL,
+            balance REAL DEFAULT 0.0
+        )
     ''')
 
-    print("Table created.")
-
-    # Insert sample data
-    print("Inserting sample data...")
+    # Create transactions table
     cursor.execute('''
-        INSERT INTO students (name, age,grade, gpa) VALUES
-        ('Alice', 16, '10th', 3.5),
-        ('Bob', 17, '11th', 3.8),
-        ('Charlie', 15, '9th', 3.2)
+        CREATE TABLE IF NOT EXISTS transactions (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            user_id INTEGER,
+            type TEXT CHECK(type IN ('deposit', 'withdrawal')) NOT NULL,
+            amount REAL NOT NULL,
+            timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+            FOREIGN KEY(user_id) REFERENCES users(id)
+        )
     ''')
-    print("Sample data inserted.")
-    # Commit the changes and close the connection
-    print("Committing changes and closing the connection...")
+
+    print("Database and tables initialized.")
     connection.commit()
     connection.close()
-
 
 initialize_database()
