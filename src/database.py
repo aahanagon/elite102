@@ -35,4 +35,4 @@ def initialize_db():
     connection.commit()
     connection.close()
 
-initialize_database()
+initialize_db()
