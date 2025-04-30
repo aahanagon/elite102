@@ -4,7 +4,7 @@ import os
 
 
 DB_NAME = os.path.join(os.getcwd(), 'data', 'bank.db')
-def initialize_database():
+def initialize_db():
     connection = sqlite3.connect(DB_NAME)
     cursor = connection.cursor()
 
