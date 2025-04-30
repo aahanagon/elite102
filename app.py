@@ -1,4 +1,5 @@
 # app.py
+from sqlite3 import IntegrityError
 import os
 import sqlite3
 from flask import (
@@ -41,14 +42,17 @@ def login():
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
-        name = request.form["name"]
-        email = request.form["email"]
-        pw = request.form["password"]
-        create_user(name, email, pw)
-        flash("Registered! Please log in.", "success")
-        return redirect(url_for("login"))
-    return render_template("register.html")
-
++        name  = request.form["name"]
++        email = request.form["email"]
++        pw    = request.form["password"]
++        try:
++            create_user(name, email, pw)
++            flash("✅ Registered! Please log in.", "success")
++            return redirect(url_for("login"))
++        except IntegrityError:
++            # this happens if email already exists
++            flash("❌ That email is already registered. Try logging in or use a different email.", "danger")
+     return render_template("register.html")
 
 @app.route("/dashboard")
 def dashboard():
