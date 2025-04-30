@@ -2,7 +2,7 @@
 import getpass
 import sqlite3
 import os
-from database import initialize_database
+from database import initialize_db
 
 # ensure the DB path matches your setup
 DB_NAME = os.path.join(os.getcwd(), 'data', 'bank.db')
@@ -34,7 +34,7 @@ def user_menu():
 
 def run():
     # make sure your tables exist
-    initialize_database()
+    initialize_db()
 
     while True:
         main_menu()
@@ -42,7 +42,7 @@ def run():
 
         if choice == "1":
             email = input("Email: ").strip()
-            pw    = getpass.getpass("Password: ").strip()
+            pw    = input("Password: ").strip()
             user = None
             with sqlite3.connect(DB_NAME) as conn:
                 cur = conn.cursor()
@@ -87,7 +87,7 @@ def run():
                 elif u == "5":
                     new_name  = input("New name (leave blank to skip): ").strip()
                     new_email = input("New email (leave blank to skip): ").strip()
-                    new_pw    = getpass.getpass("New password (leave blank to skip): ").strip()
+                    new_pw    = input("New password (leave blank to skip): ").strip()
                     update_user(user["id"],
                                 name=new_name or None,
                                 email=new_email or None,
@@ -112,7 +112,8 @@ def run():
         elif choice == "2":
             name  = input("Your name: ").strip()
             email = input("Your email: ").strip()
-            pw    = getpass.getpass("Choose a password: ").strip()
+            pw    = input("Choose a password: ").strip()
+
             create_user(name, email, pw)
 
         elif choice == "0":
