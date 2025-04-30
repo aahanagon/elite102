@@ -1,8 +1,9 @@
-import sqlite3
-from database import DB_NAME
-import sqlite3, os
 
-DB_NAME = os.path.join(os.getcwd(), 'data', 'bank.db')
+# point this at the same file your database initializer uses:
+import sqlite3
+import os
+
+DB_FILE = os.path.join(os.getcwd(), 'data', 'bank.db')
 
 def create_user(name, email, password):
     with sqlite3.connect(DB_FILE) as conn:
