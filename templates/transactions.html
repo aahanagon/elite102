@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block body %}
+<h2>Your Transactions</h2>
+<table class="table">
+  <thead><tr><th>Type</th><th>Amount</th><th>Timestamp</th></tr></thead>
+  <tbody>
+    {% for t in transactions %}
+      <tr>
+        <td>{{ t[0] }}</td>
+        <td>${{ "%.2f"|format(t[1]) }}</td>
+        <td>{{ t[2] }}</td>
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<a href="{{ url_for('dashboard') }}" class="btn btn-link">Back</a>
+{% endblock %}

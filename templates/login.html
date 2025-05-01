@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block body %}
+<h2>Login</h2>
+<form method="post">
+  <div class="mb-3">
+    <label>Email</label>
+    <input name="email" class="form-control" required>
+  </div>
+  <div class="mb-3">
+    <label>Password</label>
+    <input name="password" type="password" class="form-control" required>
+  </div>
+  <button class="btn btn-primary">Login</button>
+  <a href="{{ url_for('register') }}" class="btn btn-link">Register</a>
+</form>
+{% endblock %}

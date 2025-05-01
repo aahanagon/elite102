@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block body %}
+<h2>Welcome, {{ name }}</h2>
+<p><strong>Balance:</strong> ${{ balance }}</p>
+
+  <form action="{{ url_for('do_deposit') }}" method="post" class="mb-2">  <input name="amount" placeholder="Deposit amount" required>
+  <button class="btn btn-outline-success">Deposit</button>
+  </form>
+
+  <form action="{{ url_for('do_withdraw') }}" method="post" class="mb-2">
+  <input name="amount" placeholder="Withdrawal amount" required>
+  <button class="btn btn-outline-danger">Withdraw</button>
+</form>
+
+<a href="{{ url_for('transactions') }}" class="btn btn-link">View Transactions</a>  
+<a href="{{ url_for('logout') }}" class="btn btn-secondary">Logout</a>
+{% endblock %}
