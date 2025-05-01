@@ -2,15 +2,15 @@
 import getpass
 import sqlite3
 import os
-from database import initialize_db
+from src.database import initialize_db
 
 # ensure the DB path matches your setup
 DB_NAME = os.path.join(os.getcwd(), 'data', 'bank.db')
 
-from crud import (
+from src.crud import (
     create_user, delete_user, update_user,
     check_balance, deposit, withdraw, get_transactions
-)
+  )
 
 def main_menu():
     print("""
@@ -63,8 +63,8 @@ def run():
                 u = input("Choice> ").strip()
 
                 if u == "1":
-                    check_balance(user["id"])
-
+                    bal = check_balance(user["id"])
+                    print(f"Balance: ${bal:.2f}" if bal is not None else "User not found.")
                 elif u == "2":
                     amt = float(input("Amount to deposit: "))
                     deposit(user["id"], amt)
